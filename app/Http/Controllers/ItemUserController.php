@@ -47,4 +47,20 @@ class ItemUserController extends Controller
         }
         return redirect()->back();
     }
+    
+    public function have()
+    {
+        return redirect()->back();        
+    }
+    
+    public function dont_have()
+    {
+        $itemCode = request()->itemCode;
+
+        if (\Auth::user()->is_having($itemCode)) {
+            $itemId = Item::where('code', $itemCode)->first()->id;
+            \Auth::user()->dont_have($itemId);
+        }
+        return redirect()->back();
+    }    
 }

@@ -86,6 +86,11 @@ class User extends Model implements AuthenticatableContract,
         }
     }    
 
+    public function have_items()
+    {
+        return $this->items()->where('type', 'have');
+    }
+
 
     public function have($itemId)
     {
@@ -120,10 +125,10 @@ class User extends Model implements AuthenticatableContract,
     public function is_having($itemIdOrCode)
     {
         if (is_numeric($itemIdOrCode)) {
-            $item_id_exists = $this->want_items()->where('item_id', $itemIdOrCode)->exists();
+            $item_id_exists = $this->have_items()->where('item_id', $itemIdOrCode)->exists();
             return $item_id_exists;
         } else {
-            $item_code_exists = $this->want_items()->where('code', $itemIdOrCode)->exists();
+            $item_code_exists = $this->have_items()->where('code', $itemIdOrCode)->exists();
             return $item_code_exists;
         }
     }    
